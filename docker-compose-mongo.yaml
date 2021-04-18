@@ -1,0 +1,96 @@
+version: "3.6"
+services:
+  mongo-setup:
+    container_name: mongo-setup
+    image: mongo
+    restart: on-failure
+    networks:
+      default:
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: [ "/scripts/setup.sh" ]
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+      - mongo4
+      - mongo5
+      - mongo6
+  mongo1:
+    hostname: mongo1
+    container_name: localmongo1
+    image: mongo
+    expose:
+      - 27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    volumes:
+      - ./data/mongo1:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
+  mongo2:
+    hostname: mongo2
+    container_name: localmongo2
+    image: mongo
+    expose:
+      - 27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    volumes:
+      - ./data/mongo2:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
+  mongo3:
+    hostname: mongo3
+    container_name: localmongo3
+    image: mongo
+    expose:
+      - 27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    volumes:
+      - ./data/mongo3:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
+  mongo4:
+    hostname: mongo4
+    container_name: localmongo4
+    image: mongo
+    expose:
+      - 27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    volumes:
+      - ./data/mongo4:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
+  mongo5:
+    hostname: mongo5
+    container_name: localmongo5
+    image: mongo
+    expose:
+      - 27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    volumes:
+      - ./data/mongo5:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
+  mongo6:
+    hostname: mongo6
+    container_name: localmongo6
+    image: mongo
+    expose:
+      - 27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
+    volumes:
+      - ./data/mongo6:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
