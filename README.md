@@ -1,0 +1,2 @@
+# freelance_project_mongo_node_redis_nginx
+according to project plan
