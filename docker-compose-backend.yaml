@@ -1,12 +1,14 @@
 version: "3"
 services:
-  nginx:
-    hostname: nginx
-    container_name: nginx
-    image: nginx
-    expose:
-      - 80
-      - 443
+  webserver:
+    image: nginx:1.15.12-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./www:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
   nodejs:
     hostname: nodejs
     container_name: nodejs
