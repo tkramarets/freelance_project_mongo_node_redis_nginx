@@ -1,26 +1,18 @@
-FROM ubuntu:latest
+FROM node:alpine
 
-RUN apt update && \
-    apt -y install bash && \
-    apt -y install curl && \
-    apt -y install git && \
-    apt -y install wget && \
-    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-    apt install --yes nodejs
+WORKDIR /usr/app
 
-RUN npm install -g pm2
+RUN npm install --global pm2
+RUN npm install --global mongoose
+COPY ./project/package.json ./
+COPY ./project/package*.json ./
+COPY ./processes.json ./
+RUN npm install --production
 
-RUN mkdir -p /var/www/project
-
-WORKDIR /var/www/project
-
-ADD . /var/www/project
-
-RUN npm install
-
-COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY ./project/* ./
 
 EXPOSE 5000
 
-CMD pm2 start --no-daemon  processes.json
+USER node
+
+CMD pm2 start --no-daemon processes.json

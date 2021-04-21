@@ -1,8 +1,8 @@
 version: "3"
 services:
-  nginx:
-    hostname: nginx
-    container_name: nginx
+  frontend_nginx:
+    hostname: frontend_nginx
+    container_name: frontend_nginx
     image: nginx
     volumes:
       - ./www:/var/www/html
@@ -10,9 +10,9 @@ services:
     expose:
       - 80
       - 443
-  node_pm2:
-    hostname: node_pm2
-    container_name: node_pm2
+  frontend_node_pm2:
+    hostname: frontend_node_pm2
+    container_name: frontend_node_pm2
     build: .
     context: ./node_pm2
     expose:
