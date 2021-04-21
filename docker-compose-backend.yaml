@@ -5,7 +5,7 @@ services:
     hostname: nginx
     container_name: nginx
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
       - ./www:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
