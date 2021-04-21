@@ -10,7 +10,7 @@ services:
   nodejs:
     hostname: nodejs
     container_name: nodejs
-    image: nodejs
+    image: node:12
     expose:
       - 80
   redis:

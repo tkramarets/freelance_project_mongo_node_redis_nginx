@@ -4,11 +4,313 @@ services:
     container_name: mongo-setup
     image: mongo
     restart: on-failure
+    expose:
+      - 27147
     networks:
       default:
     volumes:
-      - ./scripts:/scripts
-    entrypoint: [ "/scripts/setup.sh" ]
+      - ./data/mongo-setup/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "admin",
+          "--port",
+          "27147",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.initiate( { _id : "rs0",members: [{ _id: 0,host: "mongo-setup:27147" }]}) ; db.getSiblingDB("admin").createUser({user: "${username}",pwd: "${password}",roles: [{role: "userAdminAnyDatabase",db:"admin"},{role: "clusterAdmin",db:"admin"}]})',
+        ]
+      interval: 10s
+      start_period: 10s
+    command: [
+        "--transitionToAuth",
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27147"
+      ]
+
+  mongo1:
+    hostname: mongo1
+    container_name: localmongo1
+    image: mongo:4.4
+    expose:
+      - 27017
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo1/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    depends_on:
+      - mongo-setup
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "mongo-setup",
+          "--port",
+          "27147",
+          "admin",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.add( { host: "mongo1:27017"} );db.adminCommand( { replSetStepDown: 1,force:true } );',
+        ]
+      interval: 10s
+      start_period: 40s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
+ 
+  mongo2:
+    hostname: mongo2
+    container_name: localmongo2
+    image: mongo:4.4
+    expose:
+      - 27027
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo2/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    depends_on:
+      - mongo-setup
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "mongo-setup",
+          "--port",
+          "27147",
+          "admin",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.add( { host: "mongo2:27027"} )',
+        ]
+      interval: 10s
+      start_period: 20s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27027",
+      ]
+  mongo3:
+    hostname: mongo3
+    container_name: localmongo3
+    image: mongo:4.4
+    expose:
+      - 27037
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo3/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    depends_on:
+      - mongo-setup
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "mongo-setup",
+          "--port",
+          "27147",
+          "admin",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.add( { host: "mongo3:27037"} )',
+        ]
+      interval: 10s
+      start_period: 20s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27037",
+      ]
+
+  mongo4:
+    hostname: mongo4
+    container_name: localmongo4
+    image: mongo:4.4
+    expose:
+      - 27047
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo4/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    depends_on:
+      - mongo-setup
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "mongo-setup",
+          "--port",
+          "27147",
+          "admin",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.add( { host: "mongo4:27047"} )',
+        ]
+      interval: 10s
+      start_period: 20s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27047",
+      ]
+
+  mongo5:
+    hostname: mongo5
+    container_name: localmongo5
+    image: mongo:4.4
+    expose:
+      - 27057
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo5/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    depends_on:
+      - mongo-setup
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "mongo-setup",
+          "--port",
+          "27147",
+          "admin",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.add( { host: "mongo5:27057"} )',
+        ]
+      interval: 10s
+      start_period: 20s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27057",
+      ]
+
+  mongo6:
+    hostname: mongo6
+    container_name: localmongo6
+    image: mongo:4.4
+    expose:
+      - 27067
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - ./data/mongo6/db:/data/db
+      - ./keyfile.pem:/keyfile.pem
+    depends_on:
+      - mongo-setup
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "mongo-setup",
+          "--port",
+          "27147",
+          "admin",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--eval",
+          'rs.add( { host: "mongo6:27067"} )',
+        ]
+      interval: 10s
+      start_period: 20s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27067",
+      ]
+
+
+
+  finalizer:
+    container_name: finalizer
+    image: mongo:4.4
+    volumes:
+      - ./keyfile.pem:/keyfile.pem
+    env_file:
+      - .env
     depends_on:
       - mongo1
       - mongo2
@@ -16,81 +318,16 @@ services:
       - mongo4
       - mongo5
       - mongo6
-  mongo1:
-    hostname: mongo1
-    container_name: localmongo1
-    image: mongo
-    expose:
-      - 27017
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
-    volumes:
-      - ./data/mongo1:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
-  mongo2:
-    hostname: mongo2
-    container_name: localmongo2
-    image: mongo
-    expose:
-      - 27017
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
-    volumes:
-      - ./data/mongo2:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
-  mongo3:
-    hostname: mongo3
-    container_name: localmongo3
-    image: mongo
-    expose:
-      - 27017
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
-    volumes:
-      - ./data/mongo3:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
-  mongo4:
-    hostname: mongo4
-    container_name: localmongo4
-    image: mongo
-    expose:
-      - 27017
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
-    volumes:
-      - ./data/mongo4:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
-  mongo5:
-    hostname: mongo5
-    container_name: localmongo5
-    image: mongo
-    expose:
-      - 27017
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
-    volumes:
-      - ./data/mongo5:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
-  mongo6:
-    hostname: mongo6
-    container_name: localmongo6
-    image: mongo
-    expose:
-      - 27017
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
-    volumes:
-      - ./data/mongo6:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all","--journal", "--replSet", "rs0", "--storageEngine", "wiredTiger", "--dbpath", "/data/db" ]
+    healthcheck:
+      test: /usr/bin/mongo "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo1:27017,mongo2:27027,mongo3:27037,mongo4:27047,mongo5:27057,mongo6:27067/admin?replicaSet=rs0" --eval 'rs.remove("mongo-setup:27147")'
+      interval: 10s
+      start_period: 45s
+    command:
+      [
+        "-keyFile",
+        "/keyfile.pem",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all"
+      ]
+

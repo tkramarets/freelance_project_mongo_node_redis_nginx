@@ -3,13 +3,13 @@ services:
   nginx:
     hostname: nginx
     container_name: nginx
-    image: nginx
+    image: nginx:1.15.12-alpine
     expose:
       - 80
       - 443
   nodejs:
     hostname: nodejs
     container_name: nodejs
-    image: nodejs
+    image: node:12
     expose:
       - 80
