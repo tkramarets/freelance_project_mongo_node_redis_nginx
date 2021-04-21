@@ -12,6 +12,12 @@ systemctl start docker
 
 edit .env 
 fill default user and password
+cat .env
+# MongoDB
+MONGO_INITDB_ROOT_USERNAME=root
+MONGO_INITDB_ROOT_PASSWORD=root
+MONGO_REPLICA_SET_NAME=rs0
+
 run : ./prepare_to_first_start.sh
 
 than:

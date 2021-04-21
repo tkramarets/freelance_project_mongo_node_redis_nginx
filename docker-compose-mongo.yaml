@@ -26,7 +26,7 @@ services:
           "-p",
           "${MONGO_INITDB_ROOT_PASSWORD}",
           "--eval",
-          'rs.initiate( { _id : "rs0",members: [{ _id: 0,host: "mongo-setup:27147" }]}) ; db.getSiblingDB("admin").createUser({user: "${username}",pwd: "${password}",roles: [{role: "userAdminAnyDatabase",db:"admin"},{role: "clusterAdmin",db:"admin"}]})',
+          'rs.initiate( { _id : "${MONGO_REPLICA_SET_NAME}",members: [{ _id: 0,host: "mongo-setup:27147" }]}) ; db.getSiblingDB("admin").createUser({user: "${username}",pwd: "${password}",roles: [{role: "userAdminAnyDatabase",db:"admin"},{role: "clusterAdmin",db:"admin"}]})',
         ]
       interval: 10s
       start_period: 10s
@@ -35,7 +35,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all",
         "--port",
         "27147"
@@ -79,7 +79,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all"
       ]
  
@@ -121,7 +121,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all",
         "--port",
         "27027",
@@ -164,7 +164,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all",
         "--port",
         "27037",
@@ -208,7 +208,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all",
         "--port",
         "27047",
@@ -252,7 +252,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all",
         "--port",
         "27057",
@@ -296,7 +296,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all",
         "--port",
         "27067",
@@ -319,7 +319,7 @@ services:
       - mongo5
       - mongo6
     healthcheck:
-      test: /usr/bin/mongo "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo1:27017,mongo2:27027,mongo3:27037,mongo4:27047,mongo5:27057,mongo6:27067/admin?replicaSet=rs0" --eval 'rs.remove("mongo-setup:27147")'
+      test: /usr/bin/mongo "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo1:27017,mongo2:27027,mongo3:27037,mongo4:27047,mongo5:27057,mongo6:27067/admin?replicaSet=${MONGO_REPLICA_SET_NAME}" --eval 'rs.remove("mongo-setup:27147")'
       interval: 10s
       start_period: 45s
     command:
@@ -327,7 +327,7 @@ services:
         "-keyFile",
         "/keyfile.pem",
         "--replSet",
-        "rs0",
+        "${MONGO_REPLICA_SET_NAME}",
         "--bind_ip_all"
       ]
 
