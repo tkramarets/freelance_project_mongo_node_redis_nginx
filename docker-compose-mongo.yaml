@@ -4,8 +4,8 @@ services:
     container_name: mongo-setup
     image: mongo
     restart: on-failure
-    expose:
-      - 27147
+    ports:
+      - 27147:27147
     networks:
       default:
     volumes:
@@ -45,8 +45,8 @@ services:
     hostname: mongo1
     container_name: localmongo1
     image: mongo:4.4
-    expose:
-      - 27017
+    ports:
+      - 27017:27017
     restart: always
     env_file:
       - .env
@@ -87,8 +87,8 @@ services:
     hostname: mongo2
     container_name: localmongo2
     image: mongo:4.4
-    expose:
-      - 27027
+    ports:
+      - 27027:27027
     restart: always
     env_file:
       - .env
@@ -130,8 +130,8 @@ services:
     hostname: mongo3
     container_name: localmongo3
     image: mongo:4.4
-    expose:
-      - 27037
+    ports:
+      - 27037:27037
     restart: always
     env_file:
       - .env
@@ -174,8 +174,8 @@ services:
     hostname: mongo4
     container_name: localmongo4
     image: mongo:4.4
-    expose:
-      - 27047
+    ports:
+      - 27047:27047
     restart: always
     env_file:
       - .env
@@ -218,8 +218,8 @@ services:
     hostname: mongo5
     container_name: localmongo5
     image: mongo:4.4
-    expose:
-      - 27057
+    ports:
+      - 27057:27057
     restart: always
     env_file:
       - .env
@@ -263,7 +263,8 @@ services:
     container_name: localmongo6
     image: mongo:4.4
     expose:
-      - 27067
+    ports:
+      - 27067:27067
     env_file:
       - .env
     restart: always
@@ -301,8 +302,6 @@ services:
         "--port",
         "27067",
       ]
-
-
 
   finalizer:
     container_name: finalizer

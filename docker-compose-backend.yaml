@@ -4,18 +4,21 @@ services:
     image: nginx
     hostname: backend_nginx
     container_name: backend_nginx
+    restart: always
     ports:
       - "81:80"
     volumes:
       - ./www:/var/www/html
       - ./backend-nginx-conf:/etc/nginx/conf.d
   backend_node_pm2:
+    restart: always
     hostname: backend_node_pm2
     container_name: backend_node_pm2
     build: ./node_pm2
     ports:
       - "5000:5000"
   backend_redis:
+    restart: always
     hostname: backend_redis
     container_name: backend_redis
     image: redis
