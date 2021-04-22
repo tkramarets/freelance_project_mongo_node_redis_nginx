@@ -18,19 +18,17 @@ MONGO_INITDB_ROOT_USERNAME=root
 MONGO_INITDB_ROOT_PASSWORD=root
 MONGO_REPLICA_SET_NAME=rs0
 
-run : ./scripts/mongo/mongo_prepare_to_first_start.sh
+run : ./scripts/mongo/prepare_mongo_to_first_start.sh
 
 run : ./scripts/mongo/mongo_start.sh
-
-after first run those two containers (mongo-setup and finalizer) are not needed and can be deleted from docker-compose-mongo.yaml
 
 #Mongo backup:
 on host machine:
 crontab -e
-00 00 * * * /path/to/backup.sh 
+00 00 * * * /path/to/mongo-backup.sh {needed container} {database name} {path to dump}
 
 #Mongo restore:
-mongo-restore.sh {path to dump} {needed container}
+./scripts/mongo/mongo-restore.sh {needed container} {path to dump}
 
 Frontend:
 
