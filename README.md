@@ -22,6 +22,8 @@ run : ./scripts/mongo/prepare_mongo_to_first_start.sh
 
 run : ./scripts/mongo/mongo_start.sh
 
+to stop: ./scripts/mongo/mongo_stop.sh
+
 #Mongo backup:
 on host machine:
 crontab -e
@@ -31,18 +33,20 @@ crontab -e
 ./scripts/mongo/mongo-restore.sh {needed container} {path to dump}
 
 Frontend:
-
-docker-compose -f docker-compose-front.yaml up
-after all container starts:
-docker-compose -f docker-compose-front.yaml start
+to start
+docker-compose -f docker-compose-front.yaml up -build -d 
+to stop
+docker-compose -f docker-compose-front.yaml stop
 
 Backend:
-docker-compose -f docker-compose-backend.yaml up
-after all container starts:
-docker-compose -f docker-compose-backend.yaml start
+to start
+docker-compose -f docker-compose-backend.yaml up -build -d 
+to stop 
+docker-compose -f docker-compose-backend.yaml stop
 
 Testserver:
-docker-compose -f docker-compose-testsrv.yaml up
-after all container starts:
-docker-compose -f docker-compose-testsrv.yaml start
+to start
+docker-compose -f docker-compose-testsrv.yaml up -build -d 
+to stop 
+docker-compose -f docker-compose-testsrv.yaml stop
 
