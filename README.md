@@ -18,15 +18,9 @@ MONGO_INITDB_ROOT_USERNAME=root
 MONGO_INITDB_ROOT_PASSWORD=root
 MONGO_REPLICA_SET_NAME=rs0
 
-run : ./prepare_to_first_start.sh
+run : ./scripts/mongo/mongo_prepare_to_first_start.sh
 
-than:
-
-docker-compose -f docker-compose-mongo.yaml up -d
-
-after all container start wait one minute than :
-
-docker-compose stop mongo-setup finalizer
+run : ./scripts/mongo/mongo_start.sh
 
 after first run those two containers (mongo-setup and finalizer) are not needed and can be deleted from docker-compose-mongo.yaml
 
