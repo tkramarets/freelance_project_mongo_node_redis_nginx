@@ -6,7 +6,8 @@ services:
     container_name: backend_nginx
     restart: always
     ports:
-      - "81:80"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./www:/var/www/html
       - ./backend-nginx-conf:/etc/nginx/conf.d
