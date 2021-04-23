@@ -1,6 +1,6 @@
 # freelance_project_mongo_node_redis_nginx
-according to project plan
 
+# Docker:
 > Install docker on any Os:
 ```bash
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -9,10 +9,10 @@ systemctl enable docker
 systemctl start docker
 ```
 
-> Mongo on separate server:
+# Mongo on separate server:
 
-edit .env 
-fill default user and password
+> edit .env 
+> fill default user and password
 
 ```bash
 cat .env
