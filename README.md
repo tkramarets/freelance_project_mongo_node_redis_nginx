@@ -37,15 +37,16 @@ MONGO_REPLICA_SET_NAME=rs0
  ./scripts/mongo/mongo_stop.sh
 ```
 
-> Mongo backup:
-> on the host machine:
+# Mongo backup:
+> on the host machine with mongo:
 ```bash
 crontab -e
 ```
 ```bash
 00 00 * * * /path/to/mongo-backup.sh {container name} {database name} {path to dump}
 ```
-> Mongo restore:
+# Mongo restore:
+> on the host machine with mongo:
 ```bash
 ./scripts/mongo/mongo-restore.sh {container name} {path to dump}
 ```
