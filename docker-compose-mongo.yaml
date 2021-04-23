@@ -2,7 +2,7 @@ version: "3.6"
 services:
   mongo-setup:
     container_name: mongo-setup
-    image: mongo
+    image: mongo:4.4
     restart: on-failure
     ports:
       - 27147:27147

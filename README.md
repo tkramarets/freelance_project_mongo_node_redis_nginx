@@ -53,7 +53,7 @@ crontab -e
 # Frontend:
 > to start
 ```bash
-docker-compose -f docker-compose-front.yaml up -build -d 
+docker-compose -f docker-compose-front.yaml up --build -d 
 ```
 
 > to stop
@@ -64,7 +64,7 @@ docker-compose -f docker-compose-front.yaml stop
 # Backend:
 > to start
 ```bash
-docker-compose -f docker-compose-backend.yaml up -build -d 
+docker-compose -f docker-compose-backend.yaml up --build -d 
 ```
 > to stop 
 ```bash
@@ -73,7 +73,7 @@ docker-compose -f docker-compose-backend.yaml stop
 # Testserver:
 > to start
 ```bash
-docker-compose -f docker-compose-testsrv.yaml up -build -d 
+docker-compose -f docker-compose-testsrv.yaml up --build -d 
 ```
 > to stop
 ```bash 
