@@ -47,7 +47,7 @@ crontab -e
 ```bash
 ./scripts/mongo/mongo-restore.sh {container name} {path to dump}
 ```
-#Frontend:
+# Frontend:
 > to start
 ```bash
 docker-compose -f docker-compose-front.yaml up -build -d 
@@ -58,7 +58,7 @@ docker-compose -f docker-compose-front.yaml up -build -d
 docker-compose -f docker-compose-front.yaml stop
 ```
 
-#Backend:
+# Backend:
 > to start
 ```bash
 docker-compose -f docker-compose-backend.yaml up -build -d 
@@ -67,7 +67,7 @@ docker-compose -f docker-compose-backend.yaml up -build -d
 ```bash
 docker-compose -f docker-compose-backend.yaml stop
 ```
-#Testserver:
+# Testserver:
 > to start
 ```bash
 docker-compose -f docker-compose-testsrv.yaml up -build -d 
