@@ -262,7 +262,6 @@ services:
     hostname: mongo6
     container_name: localmongo6
     image: mongo:4.4
-    expose:
     ports:
       - 27067:27067
     env_file:
