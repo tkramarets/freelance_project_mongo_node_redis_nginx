@@ -41,6 +41,8 @@ MONGO_REPLICA_SET_NAME=rs0
 > on the host machine:
 ```bash
 crontab -e
+```
+```bash
 00 00 * * * /path/to/mongo-backup.sh {container name} {database name} {path to dump}
 ```
 > Mongo restore:
