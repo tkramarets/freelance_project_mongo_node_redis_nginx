@@ -1,7 +1,24 @@
 # freelance_project_mongo_node_redis_nginx
 
+# Step 0 : 
+> ensure that you have git installed :
+```bash
+git 
+```
+> if result is command not found you need to install it :
+```bash
+apt install git -y
+```
+
+# Step 1 : 
+> clone repo:
+```bash
+git clone https://github.com/tkramarets/freelance_project_mongo_node_redis_nginx && cd freelance_project_mongo_node_redis_nginx
+```
+
 # Docker:
 > Install docker on any Os:
+> become as root using sudo bash
 ```bash
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
