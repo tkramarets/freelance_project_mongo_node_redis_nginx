@@ -18,7 +18,11 @@ git clone https://github.com/tkramarets/freelance_project_mongo_node_redis_nginx
 
 # Docker:
 > Install docker on any Os:
-> become as root using sudo bash
+> become as root command for that:
+```bash
+sudo bash
+```
+than put those commands:
 ```bash
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
