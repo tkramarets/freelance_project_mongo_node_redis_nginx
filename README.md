@@ -9,10 +9,18 @@ systemctl enable docker
 systemctl start docker
 ```
 
+# Docker-compose :
+> install docker-compose on any Os:
+```bash
+curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
+
 # Mongo on separate server:
 
-> edit .env 
-> fill default user and password
+> create .env file and 
+> fill it with content below
 
 ```bash
 cat .env
