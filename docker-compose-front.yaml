@@ -15,7 +15,6 @@ services:
     hostname: frontend_node_pm2
     restart: always
     container_name: frontend_node_pm2
-    build: .
-    context: ./node_pm2
+    build: ./node_pm2
     ports:
       - 5000
