@@ -329,3 +329,7 @@ services:
         "--bind_ip_all"
       ]
 
+  mongo-express:
+    image: "mongo-express:latest"
+    ports:
+      - "8081:8081"
