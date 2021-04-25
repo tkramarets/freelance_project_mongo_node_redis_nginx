@@ -7,7 +7,7 @@ services:
     image: nginx
     volumes:
       - ./www:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
+      - ./frontend-nginx-conf:/etc/nginx/conf.d
     ports:
       - 80:80
       - 443:443
